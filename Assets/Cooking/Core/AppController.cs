@@ -91,8 +91,9 @@ namespace Core
         public void OnButtonClick(ButtonEx buttonEx)
         {
             AudioManager.Instance.PlaySfx(audioButtonClick);
+            buttonEx.transform.DOKill();
             buttonEx.transform.localScale = Vector3.one;
-            buttonEx.transform.DOPunchScale(Vector3.one * -0.15f, 0.2f);
+            buttonEx.transform.DOPunchScale(Vector3.one * -0.15f, 0.2f, 1, 1);
         }
     }
 }
