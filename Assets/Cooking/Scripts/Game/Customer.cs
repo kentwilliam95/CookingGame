@@ -42,7 +42,7 @@ namespace Cooking
         public AudioClip audioClipCoin;
 
         public float waitDuration;
-
+        public System.Action<Customer> OnCustomerLeave;
         public bool IsReadyToServe => state == State.Waiting;
 
         private void OnDestroy()
@@ -129,6 +129,7 @@ namespace Cooking
                 if (waitCountDown <= 0)
                 {
                     state = State.WalkingOut;
+                    OnCustomerLeave?.Invoke(this);
                     HideBubbleChat();
                 }
             }
