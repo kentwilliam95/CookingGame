@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea83b4f5885e7d4d83f243afe1b9a00, type: 3}
+  m_Name: Trangbulan_CheeseAndMilk
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  ingredientRequirements:
+  - {fileID: 11400000, guid: 310d129d853cb9848ad54edcdd4a2c63, type: 2}
+  - {fileID: 11400000, guid: 73d4ac7f346e6af4ab3c5f487ec67f49, type: 2}
+  - {fileID: 11400000, guid: 8ba26515eec46784c87a14162853d435, type: 2}
