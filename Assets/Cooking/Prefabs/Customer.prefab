@@ -84,7 +84,7 @@ MonoBehaviour:
   audioClipOrder: {fileID: 8300000, guid: a0fd5fb10a6846a48a8d9fab4cc88f7b, type: 3}
   audioClipFinishEating: {fileID: 8300000, guid: 54cb7c59b13817c4782e366f91de7559, type: 3}
   audioClipCoin: {fileID: 8300000, guid: 51a567d4d7e661f4590eac83ab2f9be3, type: 3}
-  waitDuration: 25
+  waitDuration: 5
 --- !u!1 &6939045180307409232
 GameObject:
   m_ObjectHideFlags: 0
