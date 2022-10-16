@@ -203,10 +203,16 @@ namespace Cooking
                     var customer = ObjectPool.Instance.Spawn("Customer").GetComponent<Customer>();
 
                     customer.Initialize(foodDatabase.food[0], data.position);
+                    customer.OnCustomerLeave = Customer_OnLeave;
                     data.customer = customer;
                     totalSpawnCustomer += 1;
                 }
             }
+        }
+
+        public void Customer_OnLeave(Customer customer)
+        {
+            trangbulanStand.RemoveCustomer(customer);
         }
 
         public T GetRayCastComponent<T>() where T : Component
