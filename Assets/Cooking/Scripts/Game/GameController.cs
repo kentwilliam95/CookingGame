@@ -176,12 +176,21 @@ namespace Cooking
 
         private void CheckWinConditionServeBase()
         {
+            if (isFinish || gameType == GameType.TimeBase)
+                return;
+
             if (totalServed >= gameSetting.serveAmount)
             {
                 //Debug.Log("Show win result");
                 Database.UserData.CompleteLevel(Database.UserData.SelectedGroup);
                 gameMenuController.ShowWin();
                 Core.AudioManager.Instance.PlaySfx(audioClipWin);
+                isFinish = true;
+            }
+            else if (totalSpawnCustomer >= gameSetting.totalCustomer)
+            {
+                gameMenuController.ShowLose();
+                Core.AudioManager.Instance.PlaySfx(audioClipLose);
                 isFinish = true;
             }
         }
@@ -215,6 +224,7 @@ namespace Cooking
         public void Customer_OnLeave(Customer customer)
         {
             trangbulanStand.RemoveCustomer(customer);
+            CheckWinConditionServeBase();
         }
 
         public T GetRayCastComponent<T>() where T : Component
