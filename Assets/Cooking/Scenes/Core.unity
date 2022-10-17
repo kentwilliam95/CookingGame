@@ -428,6 +428,8 @@ MonoBehaviour:
     go: {fileID: 4888080081137025063, guid: 7d63547a704865e45893302c5bdf2d50, type: 3}
   - name: Customer
     go: {fileID: 6939045179980485325, guid: 76c34cb5d384faf4d980e8847658955c, type: 3}
+  - name: UICoin
+    go: {fileID: 42539164085339129, guid: bd0059dd2b72a9d468068a7e3b8e85dc, type: 3}
 --- !u!4 &641027493
 Transform:
   m_ObjectHideFlags: 0
@@ -881,7 +883,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2049996506}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -28.99, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1123637423}
