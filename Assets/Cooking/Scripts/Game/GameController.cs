@@ -17,6 +17,7 @@ namespace Cooking
         {
             public int serveAmount;
             public float timeDuration;
+            public int totalCustomer;
             public float spawnCustomerEveryXSeconds;
         }
 
@@ -189,7 +190,7 @@ namespace Cooking
         {
             if (gameType == GameType.ServeBase)
             {
-                if (totalSpawnCustomer >= gameSetting.serveAmount)
+                if (totalSpawnCustomer >= gameSetting.totalCustomer)
                     return;
             }
             
