@@ -33,6 +33,7 @@ namespace Core
                 pool.OnCreate = Pool_OnCreate;
                 pool.OnUnspawn = Pool_OnUnspawn;
                 pool.OnSpawn = Pool_OnSpawn;
+                pool.OnDestroy = Pool_OnDestroy;
                 dict.Add(d.name, pool);
             }
         }
@@ -71,6 +72,11 @@ namespace Core
             goTemplate.SetActive(true);
         }
 
+        private void Pool_OnDestroy(GameObject go)
+        {
+            Destroy(go);
+        }
+
         public void Flush()
         {
             foreach (var item in dict)
@@ -88,6 +94,7 @@ namespace Core
         public System.Action<GameObject> OnSpawn;
         public System.Func<GameObject, GameObject> OnCreate;
         public System.Action<GameObject> OnUnspawn;
+        public System.Action<GameObject> OnDestroy;
 
         public GameObject go;
         public Pool(GameObject go)
@@ -125,13 +132,28 @@ namespace Core
 
         public void Flush()
         {
-            for (int i = activeObject.Count - 1; i >= 0; i--)
+            var length = activeObject.Count;
+            for (int i = length - 1; i >= 0; i--)
             {
-                var go =activeObject[i].gameObject;
-                OnUnspawn?.Invoke(go);
-                unActiveObject.Push(go);
-                activeObject.Remove(go);
+                var go = activeObject[i].gameObject;
+
+                if (go)
+                    OnDestroy.Invoke(go);
+                activeObject.RemoveAt(i);
             }
+
+            activeObject.Clear();
+
+            length = unActiveObject.Count;
+            for (int i = length - 1; i >= 0; i--)
+            {
+                var go = unActiveObject.Pop();
+
+                if (go)
+                    OnDestroy.Invoke(go);
+            }
+
+            unActiveObject.Clear();
         }
     }
 }
