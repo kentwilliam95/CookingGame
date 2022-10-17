@@ -8,8 +8,8 @@ namespace Cooking
     {
         public enum GameType
         {
-            ServeBase,
-            TimeBase
+            ServeBase = 0,
+            TimeBase = 1
         }
 
         [System.Serializable]
@@ -75,6 +75,7 @@ namespace Cooking
             plates = GetComponentsInChildren<Plate>();
             fryingPans = GetComponentsInChildren<FryingPan>();
             customers = new List<Customer>();
+            gameMenuController.Initialize(gameType);
             gameMenuController.UpdateTimer(0, true);
             Core.PanelFade.Instance.Hide();
         }
