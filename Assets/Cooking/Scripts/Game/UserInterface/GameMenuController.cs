@@ -14,6 +14,8 @@ namespace Cooking
         public CanvasGroup canvasGroupLose;
         public CanvasGroup canvasGroupWin;
 
+        public RectTransform rectTransform;
+
         //private void Start()
         //{
         //    uiTimer = GetComponentsInChildren<UITimer>();
@@ -46,6 +48,17 @@ namespace Cooking
             canvasGroupWin.DOFade(1f, 0.25f);
             canvasGroupWin.blocksRaycasts = true;
             canvasGroupWin.interactable = true;
+        }
+
+        public void SpawnCoin(Customer customer)
+        {
+            var go = Core.ObjectPool.Instance.Spawn("UICoin");
+            go.transform.SetParent(rectTransform);
+            var uiCoin = go.GetComponent<UICoin>();
+            if (uiCoin)
+            {
+                uiCoin.Initialize(10.ToString(), customer.transform.position);
+            }
         }
 
         public void BackToMenu()
