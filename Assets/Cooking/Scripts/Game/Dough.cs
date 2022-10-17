@@ -2,6 +2,7 @@ using Cooking.Database;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Cooking
 {
@@ -24,6 +25,7 @@ namespace Cooking
             spriteRenderer.color = rawColor;
             cookCountDown = cookTime;
             isDone = false;
+            transform.DOScale(1, 0.25f).From(0);
         }
 
         public void Cooking()
