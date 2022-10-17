@@ -85,7 +85,21 @@ namespace Cooking
         {
             if (isFinish || !isInitialize)
                 return;
+            
+            HandleInputGame();
+            SpawnCustomer();
 
+            if (gameType == GameType.TimeBase)
+            {
+                duration -= Time.deltaTime;
+                gameMenuController.UpdateTimer(Mathf.CeilToInt(duration), true);
+                if (duration <= 0f)
+                    CheckWinConditionTimeBase();
+            }
+        }
+
+        private void HandleInputGame()
+        {
             if (Input.GetMouseButtonDown(0))
             {
                 var doughJar = GetRayCastComponent<DoughJar>();
