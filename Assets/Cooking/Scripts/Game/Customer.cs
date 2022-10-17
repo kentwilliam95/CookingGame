@@ -74,14 +74,14 @@ namespace Cooking
                 botLeft = cam.ViewportToWorldPoint(new Vector2(0, 0));
                 botRight = cam.ViewportToWorldPoint(Vector3.right);
             }
-            InitializeAnimation();
 
             int random = Random.Range(0, 2);
             if (random == 0)
-                transform.position = new Vector3(botLeft.x - 1f, 0f, 0f);
+                transform.position = new Vector3(botLeft.x - 1f, targetPosition.y, 0f);
             else if (random == 1)
-                transform.position = new Vector3(botRight.x + 1f, 0f, 0f);
+                transform.position = new Vector3(botRight.x + 1f, targetPosition.y, 0f);
             startPosition = transform.position;
+            InitializeAnimation();
 
             var diff = walkTargetPosition - transform.position;
             walkDirection = diff.normalized;
@@ -167,10 +167,10 @@ namespace Cooking
                 walkSeq.SetLoops(-1);
 
                 var totalAnimationDuration = 0f;
-                walkSeq.Insert(totalAnimationDuration, transform.DOLocalMoveY(0.5f, animationDuration * 1f).SetEase(Ease.Linear));
+                walkSeq.Insert(totalAnimationDuration, transform.DOLocalMoveY(transform.position.y + 0.5f, animationDuration * 1f).SetEase(Ease.Linear));
                 totalAnimationDuration += animationDuration * 1f;
 
-                walkSeq.Insert(totalAnimationDuration, transform.DOLocalMoveY(0f, animationDuration * 1f).SetEase(Ease.Linear));
+                walkSeq.Insert(totalAnimationDuration, transform.DOLocalMoveY(transform.position.y, animationDuration * 1f).SetEase(Ease.Linear));
                 totalAnimationDuration += animationDuration * 1f;
                 walkSeq.Pause();
             }
