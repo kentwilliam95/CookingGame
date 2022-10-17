@@ -8,6 +8,8 @@ namespace Cooking
     {
         private IIngredient iIngredient;
         private float cookDuration;
+        
+        public ParticleSystem sizzling;
         public Collider2D col2D;
         public AudioClip audioClipCook;
         public bool isBusy => iIngredient != null;
@@ -18,6 +20,7 @@ namespace Cooking
             iIngredient.Component.transform.position = transform.position;
             col2D.enabled = false;
             Core.AudioManager.Instance.PlaySfx(audioClipCook);
+            sizzling.Play();
         }
 
         private void Update()
@@ -43,6 +46,7 @@ namespace Cooking
             cookDuration -= Time.deltaTime;
             if (cookDuration <= 0)
             {
+                sizzling.Stop();
                 iIngredient.Cook();
                 col2D.enabled = true;
             }
