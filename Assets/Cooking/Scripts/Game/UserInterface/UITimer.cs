@@ -7,6 +7,7 @@ namespace Cooking
 {
     public class UITimer : MonoBehaviour
     {
+        private float prevValue;
         public TextMeshProUGUI textTimer;
         public void Initialize()
         {
@@ -15,8 +16,11 @@ namespace Cooking
 
         public void UpdateUI(float value, bool isActive = true)
         {
-            textTimer.text = Mathf.CeilToInt(value).ToString();
+            if(prevValue != value)
+                textTimer.text = Mathf.CeilToInt(value).ToString();
+
             gameObject.SetActive(isActive);
+            prevValue = value;
         }
     }
 }
