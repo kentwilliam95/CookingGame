@@ -50,12 +50,12 @@ namespace Cooking
 
         public void BackToMenu()
         {
-            Core.AppController.Instance.LoadScene(Global.SceneMenu, true, ()=> { ObjectPool.Instance.Flush(); });
+            Core.AppController.Instance.LoadScene(Global.SceneMenu, true, ()=> { Core.ObjectPool.Instance.Flush(); });
         }
 
         public void Retry()
         {
-            Core.AppController.Instance.LoadScene(Global.SceneGame, true, () => { ObjectPool.Instance.Flush(); });
+            Core.AppController.Instance.LoadScene(Global.SceneGame, true, () => { Core.ObjectPool.Instance.Flush(); });
         }
     }
 }
