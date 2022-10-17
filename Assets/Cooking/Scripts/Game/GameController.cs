@@ -143,15 +143,32 @@ namespace Cooking
                     }
                 }
             }
+        }
 
-            SpawnCustomer();
-
-            if (gameType == GameType.TimeBase)
+        private void SpawnCustomer()
+        {
+            if (gameType == GameType.ServeBase)
             {
-                duration -= Time.deltaTime;
-                gameMenuController.UpdateTimer(Mathf.CeilToInt(duration), true);
-                if (duration <= 0f)
-                    CheckWinConditionTimeBase();
+                if (totalSpawnCustomer >= gameSetting.totalCustomer)
+                    return;
+            }
+
+            spawnCustomerCountdown -= Time.deltaTime;
+            if (spawnCustomerCountdown <= 0)
+            {
+                var data = trangbulanStand.GetCustomerPosition();
+                if (data != null)
+                {
+                    spawnCustomerCountdown = gameSetting.spawnCustomerEveryXSeconds;
+                    //var customer = Instantiate(customerGO);
+                    var customer = Core.ObjectPool.Instance.Spawn("Customer").GetComponent<Customer>();
+
+                    customer.Initialize(foodDatabase.food[0], data.position);
+                    customer.OnCustomerLeave = Customer_OnLeave;
+                    customer.OnCustomerFinishGivenFood = Customer_OnGivenFood;
+                    data.customer = customer;
+                    totalSpawnCustomer += 1;
+                }
             }
         }
 
@@ -195,36 +212,15 @@ namespace Cooking
             }
         }
 
-        private void SpawnCustomer()
-        {
-            if (gameType == GameType.ServeBase)
-            {
-                if (totalSpawnCustomer >= gameSetting.totalCustomer)
-                    return;
-            }
-            
-            spawnCustomerCountdown -= Time.deltaTime;
-            if (spawnCustomerCountdown <= 0)
-            {
-                var data = trangbulanStand.GetCustomerPosition();
-                if (data != null)
-                {
-                    spawnCustomerCountdown = gameSetting.spawnCustomerEveryXSeconds;
-                    //var customer = Instantiate(customerGO);
-                    var customer = ObjectPool.Instance.Spawn("Customer").GetComponent<Customer>();
-
-                    customer.Initialize(foodDatabase.food[0], data.position);
-                    customer.OnCustomerLeave = Customer_OnLeave;
-                    data.customer = customer;
-                    totalSpawnCustomer += 1;
-                }
-            }
-        }
-
         public void Customer_OnLeave(Customer customer)
         {
             trangbulanStand.RemoveCustomer(customer);
             CheckWinConditionServeBase();
+        }
+
+        public void Customer_OnGivenFood(Customer customer)
+        {
+            gameMenuController.SpawnCoin(customer);
         }
 
         public T GetRayCastComponent<T>() where T : Component

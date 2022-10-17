@@ -119,7 +119,7 @@ namespace Cooking
                 if (percentage >= 1)
                 {
                     //Destroy(gameObject);
-                    ObjectPool.Instance.UnSpawn(gameObject);
+                    Core.ObjectPool.Instance.UnSpawn(gameObject);
                 }
                 transform.Translate(walkDirection * customerSpeed * Time.deltaTime);
             }

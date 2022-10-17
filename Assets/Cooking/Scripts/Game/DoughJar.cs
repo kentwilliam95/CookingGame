@@ -10,7 +10,7 @@ namespace Cooking
         public GameObject GetDough()
         {
             //return Instantiate(doughGameobject);
-            return ObjectPool.Instance.Spawn("Dough");
+            return Core.ObjectPool.Instance.Spawn("Dough");
         }
     }
 }
