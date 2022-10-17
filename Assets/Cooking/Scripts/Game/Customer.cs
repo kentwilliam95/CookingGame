@@ -43,6 +43,8 @@ namespace Cooking
 
         public float waitDuration;
         public System.Action<Customer> OnCustomerLeave;
+        public System.Action<Customer> OnCustomerFinishGivenFood;
+
         public bool IsReadyToServe => state == State.Waiting;
 
         private void OnDestroy()
@@ -199,6 +201,7 @@ namespace Cooking
         {
             state = State.WalkingOut;
             HideBubbleChat();
+            OnCustomerFinishGivenFood?.Invoke(this);
             Core.AudioManager.Instance.PlaySfx(audioClipFinishEating);
             Core.AudioManager.Instance.PlaySfx(audioClipCoin, 1.25f);
         }
