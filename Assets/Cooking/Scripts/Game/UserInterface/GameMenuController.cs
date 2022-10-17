@@ -8,15 +8,30 @@ namespace Cooking
 {
     public class GameMenuController : MonoBehaviour
     {
-        public TextMeshProUGUI textTimer;
+        private UITimer selectedTimer;
 
+        public UITimer[] uiTimer;
         public CanvasGroup canvasGroupLose;
         public CanvasGroup canvasGroupWin;
 
+        //private void Start()
+        //{
+        //    uiTimer = GetComponentsInChildren<UITimer>();
+        //    for (int i = 0; i < uiTimer.Length; i++)
+        //    {
+        //        uiTimer[i].gameObject.SetActive(false);
+        //    }
+        //}
+
+        public void Initialize(GameController.GameType gameType)
+        {
+            selectedTimer = uiTimer[(int)gameType];
+            selectedTimer.Initialize();
+        }
+
         public void UpdateTimer(int timer, bool isVisible)
         {
-            textTimer.text = timer.ToString();
-            textTimer.gameObject.SetActive(isVisible);
+            selectedTimer.UpdateUI(timer, isVisible);
         }
 
         public void ShowLose()
