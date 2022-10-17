@@ -13,7 +13,8 @@ namespace Cooking
 
         public void AssignIngredient(IIngredient iIngredient)
         {
-            iIngredient.Component.transform.position = transform.position;
+            //iIngredient.Component.transform.position = transform.position;
+            iIngredient.Component.transform.DOMove(transform.position, 0.25f);
             Core.AudioManager.Instance.PlaySfx(audioClipPlate);
             this.iIngredient = iIngredient;
         }
