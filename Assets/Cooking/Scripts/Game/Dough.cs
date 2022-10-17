@@ -14,6 +14,7 @@ namespace Cooking
         public SpriteRenderer spriteRenderer;
         public Color rawColor;
         public Color doneColor;
+        public ParticleSystem smoke;
 
         public float cookTime;
         public float CookDuration => cookTime;
@@ -48,6 +49,7 @@ namespace Cooking
 
         public void Cook()
         {
+            smoke.Play();
             spriteRenderer.color = doneColor;
         }
     }
