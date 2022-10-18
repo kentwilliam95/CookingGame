@@ -31,10 +31,19 @@ namespace Cooking
 
         private Sequence bubbleSeq;
         private Sequence walkSeq;
+        private Sequence emotionBarSeq;
+
         public SpriteRenderer model;
+        public Transform transformParticleSpawnPosition;
+
+        [Header("Bubble Chat")]
         public Transform bubbleChatTransform;
         public Transform bubbleChatFoodContainer;
         public SpriteRenderer bubbleChatSpriteRenderer;
+
+        [Header("Emotion Bar")]
+        public Transform transformEmotionBar;
+        public Transform transformEmotionBarFill;
 
         [Header("Audio")]
         public AudioClip audioClipOrder;
@@ -57,7 +66,9 @@ namespace Cooking
             isInitialize = false;
             bubbleSeq?.Kill();
             walkSeq?.Kill();
+            emotionBarSeq?.Kill();
 
+            emotionBarSeq = null;
             bubbleSeq = null;
             walkSeq = null;
         }
@@ -128,11 +139,17 @@ namespace Cooking
             else if (state == State.Waiting)
             {
                 waitCountDown -= Time.deltaTime;
+                var percentageScale = waitCountDown / waitDuration;
+                transformEmotionBarFill.localScale = new Vector3(1f, percentageScale, 1f);
                 if (waitCountDown <= 0)
                 {
                     state = State.WalkingOut;
                     OnCustomerLeave?.Invoke(this);
                     HideBubbleChat();
+                    HideEmotionBar();
+
+                    var go = Core.ObjectPool.Instance.Spawn("Emoji Sad");
+                    go.transform.position = transformParticleSpawnPosition.position;
                 }
             }
             else if (state == State.Order)
@@ -176,6 +193,15 @@ namespace Cooking
                 totalAnimationDuration += animationDuration * 1f;
                 walkSeq.Pause();
             }
+
+            if (emotionBarSeq == null)
+            {
+                emotionBarSeq = DOTween.Sequence();
+                emotionBarSeq.SetAutoKill(false);
+
+                emotionBarSeq.Insert(0f, transformEmotionBar.DOScale(1f, 0.25f).From(0));
+                emotionBarSeq.Pause();
+            }
         }
 
         private void ShowOrder()
@@ -184,12 +210,18 @@ namespace Cooking
             var foodGO = Instantiate(foodOrder.foodGO, bubbleChatFoodContainer);
             foodGO.transform.localPosition = Vector3.zero;
             bubbleSeq.Restart();
+            emotionBarSeq.Restart();
             Core.AudioManager.Instance.PlaySfx(audioClipOrder);
         }
 
         private void HideBubbleChat()
         {
             bubbleSeq.Rewind();
+        }
+
+        private void HideEmotionBar()
+        {
+            emotionBarSeq.Rewind();
         }
 
         public bool CheckFoodOrder(IIngredient ingredient)
@@ -201,9 +233,23 @@ namespace Cooking
         {
             state = State.WalkingOut;
             HideBubbleChat();
+            HideEmotionBar();
             OnCustomerFinishGivenFood?.Invoke(this);
             Core.AudioManager.Instance.PlaySfx(audioClipFinishEating);
             Core.AudioManager.Instance.PlaySfx(audioClipCoin, 1.25f);
+
+            var percentageScale = waitCountDown / waitDuration;
+            GameObject particle = null;
+            if (percentageScale >= 0.4f)
+            {
+                particle = Core.ObjectPool.Instance.Spawn("Emoji Smile");
+            }
+            else
+            {
+                particle = Core.ObjectPool.Instance.Spawn("Emoji Neutral");
+            }
+
+            particle.transform.position = transformParticleSpawnPosition.position;
         }
     }
 }
