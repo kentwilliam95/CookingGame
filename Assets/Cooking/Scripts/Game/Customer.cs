@@ -59,18 +59,14 @@ namespace Cooking
         private void OnDestroy()
         {
             OnDisable();
+            bubbleSeq?.Kill();
+            walkSeq?.Kill();
+            emotionBarSeq?.Kill();
         }
 
         private void OnDisable()
         {
             isInitialize = false;
-            bubbleSeq?.Kill();
-            walkSeq?.Kill();
-            emotionBarSeq?.Kill();
-
-            emotionBarSeq = null;
-            bubbleSeq = null;
-            walkSeq = null;
         }
 
         public void Initialize(Database.FoodSO foodOrder, Vector3 targetPosition)
