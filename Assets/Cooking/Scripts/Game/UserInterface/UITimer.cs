@@ -7,7 +7,7 @@ namespace Cooking
 {
     public class UITimer : MonoBehaviour
     {
-        private float prevValue;
+        private float prevValue = float.MinValue;
         public TextMeshProUGUI textTimer;
         public void Initialize()
         {
