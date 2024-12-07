@@ -2,7 +2,8 @@
 ![Output sample](Showcase/Cooking.gif)
 
 ## The Game
-Try to mimicing a cooking game where you can cook and serve to customer base on their requirement.<br>Inspired by other game(Tasty World: Cafe diner dash)
+Try to mimicing a cooking game where you can cook and serve to customer base on their requirement.<br>Inspired by other game(Tasty World: Cafe diner dash)<br>
+Project duration: 2-3 days
 
 ### Tools
 Unity 2020.3.25f1 <br>
